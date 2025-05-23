@@ -6,11 +6,12 @@ let names = JSON.parse(localStorage.getItem('names')) || [];
 
 function main() {
     result.innerHTML = '';
-    for (let name of names) {
+    names.forEach(name => {
         const div = document.createElement('div');
         div.textContent = name;
         result.appendChild(div);
-    }
+    })
+
 }
 
 main();
