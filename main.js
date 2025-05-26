@@ -1,29 +1,27 @@
-const form = document.querySelector('#form');
-const input = document.querySelector('#username');
-const result = document.querySelector('#result');
+let list = document.querySelector(".list")
+fetch('https://api.spaceflightnewsapi.net/v4/articles/').then(res => res.json()).then((data) => {
+    console.log(data)
+    main(data.results)
+})
 
-let names = JSON.parse(localStorage.getItem('names')) || [];
 
-function main() {
-    result.innerHTML = '';
-    names.forEach(name => {
-        const div = document.createElement('div');
-        div.textContent = name;
-        result.appendChild(div);
+function main(result) {
+
+
+    result.forEach(item => {
+        console.log(item)
+        let li = document.createElement("li")
+        li.innerHTML = `
+<a href="${item.url}" target="_blank">
+<img src="${item.image_url}" alt=""> 
+<p>Count : ${item.id}</p>
+<p>Summary : ${item.summary}</p>
+<span>Title : ${item.title}</span>
+</a>
+`
+
+
+        list.appendChild(li)
     })
-
 }
 
-main();
-
-form.addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    const name = input.value.trim();
-    if (name) {
-        names.push(name);
-        localStorage.setItem('names', JSON.stringify(names));
-        main();
-        input.value = '';
-    }
-});
